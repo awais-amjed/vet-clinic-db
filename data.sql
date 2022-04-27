@@ -1,10 +1,10 @@
 /* Populate database with sample data. */
 
+-- Data insertion into animals table
 INSERT INTO animals (name, date_of_birth, weight_kg, neutered, escape_attempts) VALUES ('Agumon', '2020-02-03', '10.23', TRUE, 0);
 INSERT INTO animals (name, date_of_birth, weight_kg, neutered, escape_attempts) VALUES ('Gabumon', '2018-11-15', '8', TRUE, 2);
 INSERT INTO animals (name, date_of_birth, weight_kg, neutered, escape_attempts) VALUES ('Pikachu', '2021-01-07', '15.04', FALSE, 1);
 INSERT INTO animals (name, date_of_birth, weight_kg, neutered, escape_attempts) VALUES ('Devimon', '2017-05-12', '11', TRUE, 5);
-
 INSERT INTO animals (name, date_of_birth, weight_kg, neutered, escape_attempts) VALUES ('Charmander', '2020-02-08', '-11', FALSE, 0);
 INSERT INTO animals (name, date_of_birth, weight_kg, neutered, escape_attempts) VALUES ('Plantmon', '2021-11-15', '-5.7', TRUE, 2);
 INSERT INTO animals (name, date_of_birth, weight_kg, neutered, escape_attempts) VALUES ('Squirtle', '1993-04-02', '-12.13', FALSE, 3);
@@ -20,3 +20,7 @@ INSERT INTO owners (full_name, age) VALUES ('Bob', '45');
 INSERT INTO owners (full_name, age) VALUES ('Melody Pond', '77');
 INSERT INTO owners (full_name, age) VALUES ('Dean Winchester', '14');
 INSERT INTO owners (full_name, age) VALUES ('Jodie Whittaker', '38');
+
+-- Data insertion into species table
+INSERT INTO species (name) VALUES ('Pokemon');
+INSERT INTO species (name) VALUES ('Digimon');
