@@ -11,20 +11,13 @@ SELECT * FROM animals WHERE weight_kg BETWEEN '10.4' AND '17.3';
 
 -- Transactions
 BEGIN;
-    UPDATE animals SET species = 'unspecified';
-ROLLBACK;
-BEGIN;
-    UPDATE animals SET species ='digimon' WHERE name LIKE '%mon';
-    UPDATE animals SET species ='pokemon' WHERE species IS NULL;
-COMMIT;
-BEGIN;
     DELETE FROM animals;
 ROLLBACK;
 BEGIN;
     DELETE FROM animals WHERE date_of_birth > '2022-01-01';
     SAVEPOINT s1;
     UPDATE animals SET weight_kg = weight_kg*-1;
-    ROLLBACK s1;
+    ROLLBACK TO s1;
     UPDATE animals SET weight_kg = weight_kg*-1 WHERE weight_kg < 0;
 COMMIT;
 
@@ -32,6 +25,17 @@ COMMIT;
 SELECT COUNT(*) FROM animals;
 SELECT COUNT(*) FROM animals WHERE escape_attempts = 0;
 SELECT AVG(weight_kg) FROM animals;
-SELECT neutered, SUM(escape_attempts) AS total_escape_attempts from animals GROUP BY neutered;
-SELECT species, MIN(weight_kg) AS min_weight, MAX(weight_kg) AS max_weight from animals GROUP BY species;
-SELECT species, AVG(escape_attempts) AS avergae_escape_attempts from animals WHERE date_of_birth BETWEEN '1990-01-01' AND '1999-12-31' GROUP BY species;
+SELECT neutered FROM (
+    SELECT neutered, SUM(escape_attempts) AS total_escape_attempts from animals GROUP BY neutered ORDER BY total_escape_attempts DESC
+) as subQuery LIMIT 1;
+
+-- JOIN Queries
+SELECT full_name, name FROM owners o JOIN animals a on o.id = a.owner_id WHERE full_name = 'Melody Pond';
+SELECT a.name FROM animals a JOIN species s on s.id = a.species_id WHERE s.name = 'Pokemon';
+SELECT full_name, name FROM owners LEFT JOIN animals a on owners.id = a.owner_id;
+SELECT s.name, count(species_id) FROM species s JOIN animals a on s.id = a.species_id GROUP BY s.name;
+SELECT name FROM animals a JOIN owners o on o.id = a.owner_id WHERE full_name = 'Jennifer Orwell';
+SELECT name FROM animals a JOIN owners o on o.id = a.owner_id WHERE escape_attempts = '0' AND full_name = 'Dean Winchester';
+SELECT full_name FROM (
+    SELECT full_name, COUNT(owner_id) as count FROM owners o JOIN animals a on o.id = a.owner_id GROUP BY full_name ORDER BY count DESC
+) as subQuery LIMIT 1;
