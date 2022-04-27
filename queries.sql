@@ -26,3 +26,14 @@ SELECT COUNT(*) FROM animals;
 SELECT COUNT(*) FROM animals WHERE escape_attempts = 0;
 SELECT AVG(weight_kg) FROM animals;
 SELECT neutered, SUM(escape_attempts) AS total_escape_attempts from animals GROUP BY neutered;
+
+-- JOIN Queries
+SELECT full_name, name FROM owners o JOIN animals a on o.id = a.owner_id WHERE full_name = 'Melody Pond';
+SELECT a.name FROM animals a JOIN species s on s.id = a.species_id WHERE s.name = 'Pokemon';
+SELECT full_name, name FROM owners LEFT JOIN animals a on owners.id = a.owner_id;
+SELECT s.name, count(species_id) FROM species s JOIN animals a on s.id = a.species_id GROUP BY s.name;
+SELECT name FROM animals a JOIN owners o on o.id = a.owner_id WHERE full_name = 'Jennifer Orwell';
+SELECT name FROM animals a JOIN owners o on o.id = a.owner_id WHERE escape_attempts = '0' AND full_name = 'Dean Winchester';
+SELECT full_name FROM (
+    SELECT full_name, COUNT(owner_id) as count FROM owners o JOIN animals a on o.id = a.owner_id GROUP BY full_name ORDER BY count DESC
+) as subQuery LIMIT 1;
