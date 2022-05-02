@@ -4,6 +4,8 @@
 
 > A relational database to create the initial data structure for a vet clinic
 
+![schema](./schema.png)
+
 ## Getting Started
 
 This repository includes files with plain SQL that can be used to recreate a database:
